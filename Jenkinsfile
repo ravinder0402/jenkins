@@ -1,7 +1,7 @@
 pipeline {
     agent {
         docker {
-            image 'docker:latest' // Use Docker image for building
+            image 'docker:20.10.7' // Use a Docker image with the Docker CLI
             args '--privileged -v /var/run/docker.sock:/var/run/docker.sock' // Allow privileged operations and Docker socket access
         }
     }
@@ -9,7 +9,7 @@ pipeline {
         stage('Pull Nginx Image') {
             steps {
                 script {
-                    // Pull the Nginx image (not strictly necessary for this pipeline)
+                    // Pull the Nginx image
                     sh 'docker pull nginx:alpine'
                 }
             }
@@ -32,7 +32,7 @@ pipeline {
                     kind: Deployment
                     metadata:
                       name: my-nginx
-                      namespace: default # Change if you have a specific namespace
+                      namespace: default
                     spec:
                       replicas: 1
                       selector:
