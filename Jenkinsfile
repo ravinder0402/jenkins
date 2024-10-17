@@ -2,7 +2,7 @@ pipeline {
     agent {
         docker {
             image 'docker:latest' // Use Docker image for building
-            args '--privileged -v /var/run/docker.sock:/var/run/docker.sock' // Allow privileged operations and Docker socket access
+            args '--privileged -v /var/run/docker.sock:/var/run/docker.sock' // Allow privilegedd operations and Docker socket access
         }
     }
     stages {
