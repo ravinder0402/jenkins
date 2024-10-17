@@ -2,14 +2,14 @@ pipeline {
     agent {
         docker {
             image 'docker:latest' // Use Docker image for building
-            args '--privileged' // Allow privileged operations
+            args '--privileged -v /var/run/docker.sock:/var/run/docker.sock' // Allow privileged operations and Docker socket access
         }
     }
     stages {
         stage('Pull Nginx Image') {
             steps {
                 script {
-                    // Pull the Nginx image
+                    // Pull the Nginx image (not strictly necessary for this pipeline)
                     sh 'docker pull nginx:alpine'
                 }
             }
@@ -25,9 +25,6 @@ pipeline {
         stage('Deploy to k3s') {
             steps {
                 script {
-                    // Push the image to a container registry (if needed)
-                    // sh 'docker push my-nginx-image'
-
                     // Apply the deployment configuration
                     sh '''
                     kubectl apply -f - <<EOF
@@ -35,6 +32,7 @@ pipeline {
                     kind: Deployment
                     metadata:
                       name: my-nginx
+                      namespace: default # Change if you have a specific namespace
                     spec:
                       replicas: 1
                       selector:
