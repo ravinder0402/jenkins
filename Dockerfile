@@ -1,3 +1,8 @@
-FROM node:20.17.0-alpine3.20
+# Use the small Nginx image as the base
+FROM nginx:alpine
 
-RUN apk add -U subversion
+# Copy your custom configuration files or web content
+COPY ./html /usr/share/nginx/html
+
+# Optionally expose ports
+EXPOSE 80
