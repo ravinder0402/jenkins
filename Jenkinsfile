@@ -1,12 +1,15 @@
 pipeline {
-    agent any // Use any available agent
+    agent any
     stages {
-        stage('Check Docker Version') {
-            steps {
-                script {
-                    // Run Docker version command
-                    sh 'docker version'
+        stage('Build') {
+            agent {
+                docker {
+                    image 'gradle:8.2.0-jdk17-alpine'
+                    reuseNode true
                 }
+            }
+            steps {
+                sh 'gradle --version'
             }
         }
     }
