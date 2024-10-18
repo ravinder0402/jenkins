@@ -1,0 +1,18 @@
+name: Check Trigger
+
+on:
+  workflow_dispatch: # Allows manual trigger
+  push:
+    branches:
+      - main # Change to your target branch if needed
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Print a message
+        run: echo "GitHub Action triggered successfully!"
